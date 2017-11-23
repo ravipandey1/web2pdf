@@ -1,0 +1,58 @@
+Actual Script locates here: C196262@tcs-olddev-vm-5:/usr/lib/cgi-bin, IP of Dev VM : 78.129.253.101
+
+
+step 1:
+
+
+a.) For HTTP authenticated websites:
+
+wget --user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" --user=<username> --http-password=<password> -r --spider "<websitename>" 2>&1 | grep '^--' | awk '{ print $3 }' | grep -v '\.\(css\|js\|png\|gif\|jpg\|JPG\|\pdf\|\zip\|\mp4\|\txt\|\ico\)$' > links.txt
+
+b.) Public Sites:
+
+wget --user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" -r --spider "<websitename>" 2>&1 | grep '^--' | awk '{ print $3 }' | grep -v '\.\(css\|js\|png\|gif\|jpg\|JPG\|\pdf\|\zip\|\mp4\|\txt\|\ico\)$' > links.txt
+
+c.) for cookies:
+
+        create cookies.txt file and use wget -x --load-cookies cookies.txt --user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" -r --spider "<websitename>" 2>&1 | grep '^--' | awk '{ print $3 }' | grep -v '\.\(css\|js\|png\|gif\|jpg\|JPG\|\pdf\|\zip\|\mp4\|\txt\|\ico\)$' > links.txt
+
+use http auth if required.
+
+
+Step 2: Remove duplicates
+
+cat links.txt | awk '!x[$0]++' > urls.txt
+
+
+Steps 3:
+
+add line number :  cat urls.txt | nl > 1.txt
+
+
+Steps 4:
+
+cat 1.txt | while read line; do phantomjs screenshot.js `echo $line | awk '{print $2}'` `echo $line | awk '{print $1}'`; done
+
+or, manually:
+
+phantomjs screenshot.js http://stage-cyramzauk.cp-access.com/ demo.png
+
+
+Step 5:
+
+ls | sort -n | xargs
+
+
+Step 6:
+
+convert 1.png 2.png ... n.png sample.pdf
+
+
+Step 7:
+
+Open & Download PDF at http://tcs-olddev-vm-5.acehcpp.com/sample.pdf
+
+
+Step 8:
+
+ Now share the PDF & URL list to User through MyTransfer.
