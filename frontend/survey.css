@@ -1,0 +1,171 @@
+body {
+    font-family: Open Sans;
+}
+
+h1 {
+    text-align: center;
+}
+
+#title {
+    text-decoration: underline;
+}
+
+#quiz {
+    text-indent: 10px;
+    display:none;
+}
+
+
+.button.active {
+     background: #298ABE;
+
+}
+.button.active:hover
+ {
+    background: #FFF;
+    border: 1px solid #298ABE;
+    color: #298ABE !important; 
+    padding: 1%;
+    margin-top: -20px;
+    padding-left: 4%;
+    padding-right: 4%;
+    font-size: 22px;
+}
+button {
+    position: relative;
+    float:right;
+}
+
+.button a {
+    text-decoration: none;
+    color: #FFF;
+}
+.button a:hover {
+    text-decoration: none;
+    color: #298ABE !important;
+}
+
+
+.titleHeading {
+background-color: #D5E4E2;
+    top: 0;
+    background-image: url(images/Survey-header.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 7px;
+    height: 119px;
+    color: #298ABE;
+    background-position-y: -62px;
+    padding-left: 8%;
+    font-weight: bold;
+
+
+}
+body{
+    margin: 0
+}
+.footer {
+    font-size: 30px;
+    background-color: #D5E4E2;
+    top: 0;
+    background-image: url(images/EmployeeEngagementReporting.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 1%;
+    bottom: 0;
+    color: #298ABE;
+    background-position-y: -190px;
+    text-align: left;
+    padding-left: 6%;
+    font-weight: bold;
+}
+body.backgroundImage {
+    padding-top: 5%;
+    height: 400px;
+}
+input[type="radio"] {
+    margin-right: 2%;
+    margin-left: 1%;
+}
+#container {
+     width: 97%;
+    margin: auto;
+    padding: 0 25px 40px 6px;
+    color: black;
+    font-weight: bold;
+    margin-top: 2.5%;
+    margin-bottom: 0;
+    margin-top: 0px;
+    border-radius: 0;
+    border: 0;
+    background: url(images/survey-bg.jpg);
+}
+.quiz-details{
+    color: black;
+   
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#prev {
+    display:none;
+}
+
+#start {
+    display:none;
+
+}
+#title h1{
+    float: left;
+    color:#298ABE;
+}
+#title img{
+    width: 11%;
+    margin-left: 49%;
+    margin-top: 7px;
+    margin-bottom: -30px;
+}
+.button {
+    background: #298ABE;
+    color: #FFF;
+    border: none;
+    padding: 1%;
+    margin-top: -20px;
+    padding-left: 4%;
+    padding-right: 4%;
+    font-size: 22px;
+  
+}
+#next{
+      float:right;
+}
+.button:hover
+ {
+    background: #FFF;
+    border: 1px solid #298ABE;
+    color: #298ABE !important;
+    padding: 1%;
+    margin-top: -20px;
+    padding-left: 4%;
+    padding-right: 4%;
+    font-size: 22px;
+}
+.button a:hover {
+    color: #298ABE;
+}
+#quiz{
+    margin-bottom: 6%;
+}
+#prev {
+    margin-right: 5%;
+    float: left;
+}
+a{
+    text-decoration: none;
+}
