@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node final_response.js --presets es2015,stage-2"
   },
   "keywords": [],
   "author": "",
@@ -23,12 +24,16 @@
     "path": "^0.12.7",
     "pdfkit": "^0.8.3",
     "phantomjs": "^2.1.7",
+    "puppeteer": "^0.13.0",
     "request": "^2.83.0",
     "serve-favicon": "^2.4.5",
     "url-parse": "^1.2.0",
     "webshot": "^0.18.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "dotenv": "^4.0.0"
   }
 }

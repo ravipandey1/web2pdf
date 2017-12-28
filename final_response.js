@@ -17,21 +17,16 @@ const puppeteer = require('puppeteer');
 const utilities = require('./utilities');
 const port = 3000;
 const app = express();
- var PDF = require('pdfkit'); 
+var PDF = require('pdfkit');
 
- if (app.get('env') === 'development') {
+if (app.get('env') === 'development') {
   dotenv.config();
 } else {
   console.log('Application is running in production environ');
 }
 
 
-
- 
-
-
-
-app.use(express.static(path.join(__dirname, 'web2Pdf')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(bodyParser.json());
@@ -40,27 +35,19 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(compression());
 
-app.get('/',function(req,res){
-	res.sendFile(path.join(__dirname+'/web2Pdf/home.html'));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname + '/frontend/home.html'));
 });
 
-app.get('/pdfpage',function(req,res){
-  res.sendFile(path.join(__dirname+'/web2Pdf/pdfgen.html'));
+app.get('/pdfpage', function (req, res) {
+  res.sendFile(path.join(__dirname + '/frontend/pdfgen.html'));
 });
-var jsonParser = bodyParser.json();
-app.use(bodyParser.urlencoded({ extended: false }));
-// app.post('/url', function (req, res) {
-	
-//var fetchedUrl= req.body.url;
-//console.log(fetchedUrl);
-  
-// });
 
 app.post('/url', function (req, res) {
-  
-var fetchedUrl= req.body.url;
-    console.log(fetchedUrl);
-    
+
+  var fetchedUrl = req.body.url;
+  console.log(fetchedUrl);
+
   // TODO: Enable the below line in production
   // if (!req.body.length) return res.send('Body not found in request.');
   // For Crawler to exlcude file types
@@ -80,10 +67,22 @@ var fetchedUrl= req.body.url;
   let url = new URL(START_URL);
   let baseUrl = url.protocol + "//" + url.hostname;
   let urlFilePath = './websites/' + url.hostname + '/' + urlFile;
-  app.set('hostname',url.hostname);
+  app.set('hostname', url.hostname);
 
-  if (!fs.existsSync('./websites/' + url.hostname)){
-      fs.mkdirSync('./websites/' + url.hostname);
+  if (!fs.existsSync('./websites/')) {
+    fs.mkdirSync('./websites/');
+  }
+
+  if (!fs.existsSync('./views/')) {
+    fs.mkdirSync('./views/');
+  }
+
+  if (!fs.existsSync('./PDF/')) {
+    fs.mkdirSync('./PDF/');
+  }
+
+  if (!fs.existsSync(`./websites/${url.hostname}`)) {
+    fs.mkdirSync(`./websites/${url.hostname}`);
   }
 
   pagesToVisit.push(START_URL);
@@ -103,10 +102,10 @@ var fetchedUrl= req.body.url;
           console.log("Output... saved to /urls.txt");
           //screenshot();
         }
-          // return res.render((__dirname+'/web2Pdf/home.html'));
+        // return res.render((__dirname+'/frontend/home.html'));
         // res.status(200).end();
-      // return res.send(JSON.stringify(pagesToVisit));
-     });
+        // return res.send(JSON.stringify(pagesToVisit));
+      });
     }
     if (pagesToVisit.length >= 50) {
       console.log("Pages to visit array size threshold hit.");
@@ -116,11 +115,11 @@ var fetchedUrl= req.body.url;
         }
         else {
           console.log("Output.saved to /urls.txt");
-        screenshot();
+          screenshot();
         }
-    return res.render((__dirname+'/web2Pdf/home.html'));
+        return res.render((__dirname + '/frontend/home.html'));
         res.end();
-     // return res.send(JSON.stringify(pagesToVisit));
+        // return res.send(JSON.stringify(pagesToVisit));
       });
     }
     if (numPagesVisited < pagesToVisit.length) {
@@ -144,18 +143,18 @@ var fetchedUrl= req.body.url;
           console.log("Output.. saved to /urls.txt");
           screenshot();
         }
-   // return res.send(JSON.stringify(pagesToVisit));
-   // return res.redirect('pdfgen.html', { root: node.web2Pdf})
+        // return res.send(JSON.stringify(pagesToVisit));
+        // return res.redirect('pdfgen.html', { root: node.frontend})
 
-  // return res.render((__dirname+'/web2Pdf/home.html'));
-  //       res.end();
- return res.redirect('/pdfpage');  
-     });
+        // return res.render((__dirname+'/frontend/home.html'));
+        //       res.end();
+        
+      });
 
-console.log("ITS THE ENDING");
+      console.log("ITS THE ENDING");
     }
 
- }
+  }
 
   function visitPage(url, callback) {
     // Add page to our set
@@ -224,102 +223,100 @@ console.log("ITS THE ENDING");
     });
     console.log('=======================================');
   }
+
+
+  function screenshot() {
+    var fs = require('fs');
+  
+    var puppeteer = require('puppeteer');
+    fs.readFile(`./websites/${url.hostname}/urls_list.txt`, 'utf8', function (err, data) {
+      if (err) throw err;
+      console.log(data);
+      var obj = JSON.parse(data);
+  
+  
+      console.log(obj);
+  
+  
+      (async () => {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        var site = obj;
+        console.log(site);
+  
+        for (var i = 0; i < site.length; i++) {
+          console.log(i);
+          var URL = site[i];
+          console.log(URL);
+          await page.goto(URL);
+          await page.screenshot({ path: './views/' + i + 'example.png', fullPage: true });
+  
+        }
+        console.log('********ended*************');
+        await pdfgenerator();
+        await browser.close();
+      }
+      )();
+  
+    });
+  
+  }
+  
+  function pdfgenerator() {
+    var PDF = require('pdfkit');
+    var fs = require('fs');
+  
+    var fs = require('fs');
+    var async = require('async');
+    var doc = new PDF();
+    var i = 1;
+    doc.pipe(fs.createWriteStream(`./PDF/${url.hostname}.pdf`));
+  
+    i = i + 1;
+
+    var dirPath = './views';
+  
+    fs.readdir(dirPath, function (err, filesPath) {
+      if (err) throw err;
+      console.log(err);
+      filesPath = filesPath.map(function (filePath) {
+        console.log(dirPath + "/" + filePath);
+  
+        return dirPath + "/" + filePath;
+  
+      });
+      async.map(filesPath, function (err, filesPath) {
+        fs.readFile(err, filesPath);
+  
+      }, function (err, body) {
+        if (err) throw err;
+  
+  
+        console.log(body);
+        console.log('added');
+        for (var i = 0; i < body.length; i++) {
+          doc.image(body[i], 0, 15, { width: 500 });
+          // doc.text('HOLIDAYS - 1 Fortime',80,165,{align:'TOP'});
+          // doc.text('Hello this is a demo file',100,200);
+  
+  
+          doc.addPage();
+        }
+  
+        doc.end();
+        return res.send('PDF Generated successfully');
+  
+      });
+  
+    });
+  }
+
 })
 
 
-function screenshot(){
-  var fs= require('fs');
-
-var puppeteer = require('puppeteer');
- fs.readFile('./websites/www.lilly.se/urls_list.txt', 'utf8', function(err, data) {
-  if (err) throw err;
-  console.log(data);
-  var obj = JSON.parse(data);
-
-
-console.log(obj);
-
-
-(async () =>
-
-{
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  var site=obj;
-  console.log(site);
-
-   for(var i=0;i<site.length;i++)
-          {   
-                   console.log(i);
-                   var URL=site[i];
-                   console.log(URL);
-                     await page.goto(URL);
-                     await page.screenshot({path: './views/'+i+'example.png',fullPage: true});
-
-          }
-          console.log('********ended*************');
-          pdfgenerator();
-    await browser.close();
-  }
-)();
-  
-});
-  
-}
-
-
-function pdfgenerator()
-{
-  var PDF = require('pdfkit');            
-  var fs = require('fs'); 
-
-  var fs = require('fs');
-  var async = require('async');                
-  doc = new PDF(); 
- i= 1;                       
-  doc.pipe(fs.createWriteStream('./PDF/'+i+'test.pdf'));  
-
-  i=i+1;
 
 
 
-  var dirPath = './views'; 
-
-      fs.readdir(dirPath, function (err, filesPath) {
-      if (err) throw err;
-      console.log(err);
-      filesPath = filesPath.map(function(filePath){ 
-      console.log(dirPath +"/"+filePath);
-
-      return  dirPath +"/"+filePath;
-
-      });
-      async.map(filesPath, function(err, filesPath){ 
-      fs.readFile(err, filesPath);
-
-      }, function(err,body){
-      if (err) throw err; 
-
-
-      console.log(body);
-      console.log('added');
-      for(var i=0;i<body.length;i++)
-       {
-          doc.image(body[i],0,15,{width:500});
-          // doc.text('HOLIDAYS - 1 Fortime',80,165,{align:'TOP'});
-          // doc.text('Hello this is a demo file',100,200);
-        
-
-          doc.addPage();
-       }
-         
-             doc.end();
-       return;   
-              
-      });
-      
-  });
- }
 
 app.listen(port, () => {
   console.log('Server is running on port:' + port);
