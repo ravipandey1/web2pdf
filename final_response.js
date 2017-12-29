@@ -39,9 +39,9 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/frontend/home.html'));
 });
 
-app.get('/pdfpage', function (req, res) {
-  res.sendFile(path.join(__dirname + '/frontend/pdfgen.html'));
-});
+// app.get('/pdfpage', function (req, res) {
+//   res.sendFile(path.join(__dirname + '/frontend/pdfgen.html'));
+// });
 
 app.post('/url', function (req, res) {
 
@@ -77,8 +77,8 @@ app.post('/url', function (req, res) {
     fs.mkdirSync('./views/');
   }
 
-  if (!fs.existsSync('./PDF/')) {
-    fs.mkdirSync('./PDF/');
+  if (!fs.existsSync('./frontend/PDF/')) {
+    fs.mkdirSync('./frontend/PDF/');
   }
 
   if (!fs.existsSync(`./websites/${url.hostname}`)) {
@@ -270,7 +270,7 @@ app.post('/url', function (req, res) {
     var async = require('async');
     var doc = new PDF();
     var i = 1;
-    doc.pipe(fs.createWriteStream(`./PDF/${url.hostname}.pdf`));
+    doc.pipe(fs.createWriteStream(`./frontend/PDF/${url.hostname}.pdf`));
   
     i = i + 1;
 

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="web2pdf/css/style.css" />
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -15,25 +15,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-$(".help_click").css("display", "block");
-   $(".help_click_close").css("display", "none");
-    $( ".help_click" ).click(function() {
-   $("#display_help").css("display", "block");
-   $(".help_click").css("display", "none");
-   $(".help_click_close").css("display", "block");
-       
-});
-    $( ".help_click_close" ).click(function() {
+        $(document).ready(function () {
+            $(".help_click").css("display", "block");
+            $(".help_click_close").css("display", "none");
+            $(".help_click").click(function () {
+                $("#display_help").css("display", "block");
+                $(".help_click").css("display", "none");
+                $(".help_click_close").css("display", "block");
 
+            });
+            $(".help_click_close").click(function () {
+                $("#display_help").css("display", "none");
+                $(".help_click").css("display", "block");
+                $(".help_click_close").css("display", "none");
+            });
 
- $("#display_help").css("display", "none");
-$(".help_click").css("display", "block");
-   $(".help_click_close").css("display", "none");
-});
+        });
 
-});
-      
 
     </script>
 </head>
@@ -52,70 +50,33 @@ $(".help_click").css("display", "block");
                     <a href='#' class="active-iframe help_click" style="color: white;
     font-weight: bold;
     font-size: 1.3em;
-    text-decoration: underline;"
-    >Help</a>
-    <a href='#' class="active-iframe help_click_close" style="color: white;
+    text-decoration: underline;">Help</a>
+                    <a href='#' class="active-iframe help_click_close" style="color: white;
     font-weight: bold;
     font-size: 1.3em;
-    text-decoration: underline;"
-    >Close Help</a>
+    text-decoration: underline;">Close Help</a>
 
                 </div>
             </div>
         </div>
 
         <div class="container-fluid bgBack">
-             
-
             <div class="blur"></div>
             <div class="row">
-                  <iframe  id="display_help" src="http://vm-acellywd-087:8080/Home.aspx#" style="  display:none;  overflow: auto;
-    width: 50%;
-    height: 480px;
-top: 75px;
-    left: 350px;
-    position: relative;
-    z-index: 99999999;"></iframe>
+                <iframe id="display_help" src="http://vm-acellywd-087:8080/Home.aspx#" class="iFrame_Help"></iframe>
                 <div class="col-sm-6 col-sm-offset-3 formControl">
                     <div class="titleHeader">
-                        <h3>Title Of the Form</h3>
+                        <h3>Web2PDF Generator</h3>
                     </div>
 
                     <div role="urlFetching">
-
-                        <form id="urlForm" method="POST" action="/url">
-                            <input type="url" pattern="https?://.+" required  id="urlText" name="url">
+                        <form id="urlForm">
+                            <input required id="urlText" style="width:400px">
                             <label for="urlText">Enter the URL</label>
-                            <input type="submit" id="go" value="GENERATE PDF" >
+                            <button id="generatePdf" class="btn btn-primary">Generate PDF</button>
                         </form>
                     </div>
-                  
-                    
 
-                 <!--    <div class="textMultiCheck">
-                        <div class="urlCheck">
-                            <p>
-                                <input type="checkbox" id="test1" />
-                                <label for="test1">www.google.com</label>
-                            </p>
-                            <p>
-                                <input type="checkbox" id="test2" />
-                                <label for="test2">www.google.com</label>
-                            </p>
-                            <p>
-                                <input type="checkbox" id="test3" />
-                                <label for="test3">www.google.com</label>
-                            </p>
-                            <p>
-                                <input type="checkbox" id="test4" />
-                                <label for="test4">www.google.com</label>
-                            </p>
-                            <p>
-                                <input type="checkbox" id="test5" />
-                                <label for="test5">www.google.com</label>
-                            </p>
-                        </div>
-                    </div> -->
                     <div id="resolution">
                         <span class="button-checkbox">
                             <button type="button" class="btn" data-color="danger">Mobile</button>
@@ -134,27 +95,28 @@ top: 75px;
                             <input type="checkbox" class="hidden" checked />
                         </span>
                     </div>
-                    
-
-                   <!--  <div id="submitForm">
-                        <div id="loader">
-                            <div class="loading"><span></span></div>
-                            <input type="submit" id="generatePdf" value="Generate PDF">
-                            <p class="loaded">Load Complete</p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="row" id="openPdfDiv">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="row">
+                        <div class="col-sm-12 text-center" >
+                            <p class="bg-success">
+                                <span>PDF Generated Successfully</span>
+                                <span class="btn btn-primary">
+                                    <a id="openPdfLink" href="../PDF/lilly.pdf" target='_blank'>Open pdf</a>
+                                </span>
+                            </p>
+                            <!-- <button id="openPdf" class="btn btn-warning">Open PDF</button> -->
                         </div>
-                    </div> -->
-                   <!--  <div id="download">
-                        <div class="dwnld-container">
-                             <button class="button dwnld">  <span>Download</span></button>
-                            <button type="button" class="slide"></button>
-                        </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
-                    <!-- <div  class="reference">
-                        <a href="file://C:/Users/C255079/node/PDF/test.pdf">OPEN PDF</a> 
-                    </div> -->
+
         <footer class="footer_section" id="contact">
             <div class="container">
                 <div class="footer_bottom">
@@ -164,116 +126,31 @@ top: 75px;
         </footer>
     </div>
 
-     <script type="text/javascript" src="http://localhost:8080/sse.js"></script>
-     <script type="text/javascript">
-    // in this example sse.js will be fetched from server 
-    // you can also copy client.js file and serve it from different place 
-    var sse = new ServerSentEvent('events');
- 
-    sse.on('test', function (data) {
-        console.log('test', data);
-    });
- 
-    sse.on('message', function (data) {
-        console.log('message', data);
-    });
-</script> 
-    <!--Import jQuery before materialize.js-->
-    
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Generating PDF...</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('.button-checkbox').each(function () {
+    <script src="js/app.js"></script>
 
-                // Settings
-                var $widget = $(this),
-                    $button = $widget.find('button'),
-                    $checkbox = $widget.find('input:checkbox'),
-                    color = $button.data('color'),
-                    settings = {
-                        on: {
-                            icon: 'glyphicon glyphicon-check'
-                        },
-                        off: {
-                            icon: 'glyphicon glyphicon-unchecked'
-                        }
-                    };
-
-                // Event Handlers
-                $button.on('click', function () {
-                    $checkbox.prop('checked', !$checkbox.is(':checked'));
-                    $checkbox.triggerHandler('change');
-                    updateDisplay();
-                });
-                $checkbox.on('change', function () {
-                    updateDisplay();
-                });
-
-                // Actions
-                function updateDisplay() {
-                    var isChecked = $checkbox.is(':checked');
-
-                    // Set the button's state
-                    $button.data('state', (isChecked) ? "on" : "off");
-
-                    // Set the button's icon
-                    $button.find('.state-icon')
-                        .removeClass()
-                        .addClass('state-icon ' + settings[$button.data('state')].icon);
-
-                    // Update the button's color
-                    if (isChecked) {
-                        $button
-                            .removeClass('btn-default')
-                            .addClass('btn-' + color + ' active');
-                    }
-                    else {
-                        $button
-                            .removeClass('btn-' + color + ' active')
-                            .addClass('btn-default');
-                    }
-                }
-
-                // Initialization
-                function init() {
-
-                    updateDisplay();
-
-                    // Inject the icon if applicable
-                    if ($button.find('.state-icon').length == 0) {
-                        $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
-                    }
-                }
-                init();
-            });
-        });
-
-
-        //button loader
-        var loadButton = $('input#generatePdf[type=submit]'),
-    loadingBar = $('.loading > span'),
-    loadingCompleteMsg = $('.loaded'),
-        laoderdiv = $('.loading');
-
-        loadButton.on('click', function (e) {
-            e.preventDefault();
-            laoderdiv.css('display', 'block');
-            loadingBar.animate({
-                'width': '100%'
-            }, 1500);
-            $(this).fadeOut();
-            loadingCompleteMsg.delay(1500).fadeIn();
-        });
-
-        //download button
-
-
-    </script>
-<script type="text/javascript">
-        $(document).ready(function () {
-            var bgImgHeight = $(window).height() - 50;
-            $('.bgBack').css('min-height', bgImgHeight);
-        });
-    </script>
 </body>
+
 </html>
